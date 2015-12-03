@@ -1,0 +1,65 @@
+Commands 
+
+1.) ls
+ 
+nadeeshani@nadeeshani-TECRA-M11:~$ ls
+
+120410C_Final_Paper.odt  google-cloud-sdk              Templates
+certs                    IdeaProjects                  test
+
+2.)  “ls -l” list the content of folder, in long listing fashion
+
+nadeeshani@nadeeshani-TECRA-M11:~$ ls -l
+
+-rw-rw-r--  1 nadeeshani nadeeshani  916828 නෙවැ 14 18:41 120410C_Final_Paper.odt
+drwxrwxr-x  2 nadeeshani nadeeshani    4096 නෙවැ 27 11:22 certs
+-rw-rw-r--  1 nadeeshani nadeeshani    5585 නෙවැ 18 11:43 config.yml
+drwxr-xr-x  6 nadeeshani nadeeshani    4096 දෙසැ  1 09:34 Desktop
+-rw-rw-r--  1 nadeeshani nadeeshani     348 නෙවැ 18 11:44 Dockerfile
+drwxrwxr-x  4 nadeeshani nadeeshani    4096 නෙවැ 18 12:15 Docker_Reg
+
+3.) “ls -a“, list the content of folder, including hidden files starting with ‘.’.
+
+nadeeshani@nadeeshani-TECRA-M11:~$ ls -a
+
+.                        .compiz     Downloads         .IntelliJIdea15               .mplayer    test            workspace
+..                       .config     .eclipse          .java                         Music       .thunderbird    .Xauthority
+
+4.) “lsblk” print block devices by their assigned name (but not RAM) on the standard output in a tree-like fashion.
+
+NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+sda      8:0    0 465.8G  0 disk 
+├─sda1   8:1    0   7.5G  0 part [SWAP]
+├─sda2   8:2    0  74.5G  0 part /
+└─sda3   8:3    0 383.8G  0 part /home
+sr0     11:0    1  1024M  0 rom  
+
+5.) “dd” stands for (Convert and Copy a file), Can be used to convert and copy a file and most of the times is used to copy a iso file (or any other file) to a usb device (or any other location), thus can be used to make a ‘Bootlable‘ Usb Stick.
+
+6.)  “uname” command stands for (Unix Name), print detailed information about the machine name, Operating System and Kernel.
+
+7.)  “chmod” command stands for (change file mode bits). chmod changes the file mode (permission) of each given file, folder, script, etc.. according to mode asked for.
+
+There exist 3 types of permission on a file (folder or anything but to keep things simple we will be using file).
+
+Read (r)=4
+Write(w)=2
+Execute(x)=1
+
+8.) “chown” command stands for (change file owner and group). Every file belongs to a group of user and a owner. It is used Do ‘ls -l‘ into your directory and you will see something like this.
+
+Here the directory Binary is owned by user “server” and it belongs to usergroup “root” where as directory “Desktop” is owned by user “server” and belongs to user group “server“.
+
+This “chown” command is used to change the file ownership and thus is useful in managing and providing file to authorised user and usergroup only.
+
+root@tecmint:~# chown server:server Binary
+
+drwxr-xr-x 3 server server 4096 May 10 11:14 Binary 
+drwxr-xr-x 2 server server 4096 May 13 09:42 Desktop
+
+9.) “apt” command stands for (Advanced Package Tool). Apt is an advanced package manager for Debian based system (Ubuntu, Kubuntu, etc.), that automatically and intelligently search, install, update and resolves dependency of packages on Gnu/Linux system from command line.
+
+10.) “tar” command is a Tape Archive is useful in creation of archive, in a number of file format and their extraction.
+
+root@tecmint:~# tar -zxvf abc.tar.gz (Remember 'z' for .tar.gz)
+

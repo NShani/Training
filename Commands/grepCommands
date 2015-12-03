@@ -1,0 +1,100 @@
+Grep Commands
+
+The grep command is used to search text or searches the given file for lines containing a match to the given strings or words. By default, grep displays the matching lines. Use grep to search for lines of text that match one or many regular expressions, and outputs only the matching lines.
+
+
+1) grep 'word' filename
+// this will display the line which include the ‘word’ from the file named ‘filename’
+    e.g. :-
+        Command     :  grep ADD Dockerfile
+        Output      :  ADD ./config.yml /docker-registry/config/config.yml
+     // this displays the line with the word “ADD” from the Dockerfile
+
+        Command :  grep add Dockerfile
+        Output  :  
+     // no output since Dockerfile contains "ADD". No word “add”.
+
+
+2) grep -i  'word' filename
+// To solve above problem can use i option. You can force grep to ignore word case with it. Match ADD, Add, add, AdD and any case of add.
+   e.g. :- 
+ Command :  grep -i ADD Dockerfile
+        Output  :  # Add the custom configuration file we made
+                ADD ./config.yml /docker-registry/config/config.yml
+     // this displays every line with the word “add” ignoring word cases
+
+3) grep -r "word" directorypath
+// You can search recursively.
+     e.g. :- 
+ Command     :  grep -r ADD Tomcat
+        Output      :  Dockerfile:ADD sample.war /usr/local/tomcat/webapps/
+     // this reads all files under Tomcat directory for a string "ADD"
+    
+     Command     :  grep -r "192.168.16." /etc/hosts
+        Output      : /etc/hosts: 192.168.16.2 nadeeshani
+  /etc/hosts: 192.168.16.2 test.wso2.com
+    // this reads all files under /etc/hosts directory for a string "192.168.16."
+
+4) grep  -h -r  "word" directorypath
+// The inclusion of the file names in the output data can be suppressed by using the -h option.
+     e.g. :-  
+Command     :  grep -r "192.168.16." /etc
+        Output      :  192.168.16.2 nadeeshani
+   192.168.16.2 test.wso2.com
+    // this reads all files under /etc directory for a string "192.168.16." and display without filename
+
+5) grep  -w  "word" file
+// Use grep to search words only
+     e.g. :-  
+Command     :  grep -w "192" /etc/hosts
+        Output      :  192.168.16.2 nadeeshani
+   192.168.16.2 test.wso2.com
+    // When you search for 192, grep will match 192boo, boo192, sdf192fdg and more. 
+
+6) egrep  -w  "word1 | word2" file
+// Use grep to search 2 different words
+     e.g. :-  
+ Command     :  egrep -w '192|test' /etc/hosts
+        Output      :  192.168.16.2 nadeeshani
+   192.168.16.2 test.wso2.com
+   192.34.24.2
+   192.168.16.2
+     // When you search for 192 and test, it will display all the containing matches lines 
+
+7) grep  -c  "word" file
+ // report the number of times that the pattern has been matched for each file using -c (count)  option
+     e.g. :-  
+ Command     :  grep -c test /etc/hosts
+        Output      :  4
+     // this reports the count that the “test” word has been matched for hosts file
+
+8) grep  -n  "word" file
+ // Pass the -n option to precede each line of output with the number of the line in the text file from which it was obtained.
+     e.g. :-  
+ Command     :  grep -n test /etc/hosts
+        Output      :  11:192.168.16.2 test.wso2.com
+   12:192.168.16.2 test.wso2.com
+   13:192.168.16.2 test2.wso2.com
+   14:192.168.16.2 test3.wso2.com
+     // this display the line number of each line containing the “test” word
+
+9) grep  -v  "word" file
+ // You can use -v option to print inverts the match. It matches only those lines that do not contain the “word” from the file
+     e.g. :-  
+ Command     :  grep -v test /etc/hosts
+        Output      : 127.0.0.1    localhost
+  192.168.16.2 nadeeshani
+  ::1     ip6-localhost ip6-loopback
+  fe00::0 ip6-localnet
+  ff00::0 ip6-mcastprefix
+     // this displays the lines that do not contain the ”test” word from the hosts file
+
+10) grep  -l  "word" fileExtention
+ // Use the -l option to list file
+     e.g. :-  
+ Command     : grep -l 'main' /home/nadeeshani/Basics/*.java
+        Output      : /home/nadeeshani/Basics/Hello.java
+  /home/nadeeshani/Basics/XMLWriterDOM.java
+ // this displays the all java files which includes the “main” word from the /home/nadeeshani/Basics directory
+
+
