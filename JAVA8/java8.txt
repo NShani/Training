@@ -1,0 +1,194 @@
+JAVA8
+The principal enhancement in Java 8 is the addition of functional programming 
+constructs to its object-oriented roots.
+The key points of this chapter are: 
+• A lambda expression is a block of code with parameters. 
+• Use a lambda expression whenever you want a block of code executed at a 
+later point in time. 
+• Lambda expressions can be converted to functional interfaces. 
+• Lambda expressions can access effectively final variables from the enclosing 
+scope. 
+• Method and constructor references refer to methods or constructors without 
+invoking them. 
+• You can now add default and static methods to interfaces that provide 
+concrete implementations. 
+• You must resolve any conflicts between default methods from multiple 
+interfaces.
+
+Lambdas 
+A “lambda expression” is a block of code that you can pass around so it can be 
+executed later, once or multiple times.
+
+
+public class Java8Tester {
+   public static void main(String args[]){
+      Java8Tester tester = new Java8Tester();
+		
+      //with type declaration
+      MathOperation addition = (int a, int b) -> a + b;
+		
+      //with out type declaration
+      MathOperation subtraction = (a, b) -> a - b;
+		
+      //with return statement along with curly braces
+      MathOperation multiplication = (int a, int b) -> { return a * b; };
+		
+      //without return statement and without curly braces
+      MathOperation division = (int a, int b) -> a / b;
+		
+      System.out.println("10 + 5 = " + tester.operate(10, 5, addition));
+      System.out.println("10 - 5 = " + tester.operate(10, 5, subtraction));
+      System.out.println("10 x 5 = " + tester.operate(10, 5, multiplication));
+      System.out.println("10 / 5 = " + tester.operate(10, 5, division));
+		
+      //with parenthesis
+      GreetingService greetService1 = message ->
+      System.out.println("Hello " + message);
+		
+      //without parenthesis
+      GreetingService greetService2 = (message) ->
+      System.out.println("Hello------ " + message);
+		
+      greetService1.sayMessage("Nadeeshani");
+      greetService2.sayMessage("Kalani");
+   }
+	
+   interface MathOperation {
+      int operation(int a, int b);
+   }
+	
+   interface GreetingService {
+      void sayMessage(String message);
+   }
+	
+   private int operate(int a, int b, MathOperation mathOperation){
+      return mathOperation.operation(a, b);
+   }
+}
+
+
+Lambda expressions are used primarily to define inline implementation of a functional interface, i.e., an interface with a single method only. In the above example, we've used various types of lambda expressions to define the operation method of MathOperation interface. Then we have defined the implementation of sayMessage of GreetingService.
+Lambda expression eliminates the need of anonymous class and gives a very simple yet powerful functional programming capability to Java.
+Functional Interfaces
+
+You can supply a lambda expression whenever an object of an interface with a
+single abstract method is expected. Such an interface is called a functional interface.
+Functional Interface Example
+Predicate <T> interface is a functional interface with a method test(Object) to return a Boolean value. This interface signifies that an object is tested to be true or false.
+Arrays.sort(words,
+(first, second) -> Integer.compare(first.length(), second.length()));
+
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Predicate;
+
+public class Functional_interface {
+
+   final static String salutation = "Hello! ";
+   
+   public static void main(String args[]){
+      	List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9); 
+	System.out.println("Print all the numbers ");
+	eval (list, n -> true);
+
+	System.out.println("Print all even numbers  ");
+	eval (list, n -> n%2 == 0);
+
+	System.out.println("Print all odd numbers  ");
+	eval (list, n -> n%2 == 1);
+
+	System.out.println("Print all numbers greater than 3 ");
+	eval (list, n -> n>3);
+
+   }
+	
+   public static void eval(List<Integer> list, Predicate<Integer> predicate) {
+      for(Integer n: list) {
+		
+         if(predicate.test(n)) {
+            System.out.println(n + " ");
+         }
+      }
+   }
+
+}
+
+
+Default Methods
+Many programming languages integrate function expressions with their collec-
+tions library. This often leads to code that is shorter and easier to understand
+than the loop equivalent. For example, consider a loop
+for (int i = 0; i < list.size(); i++)
+System.out.println(list.get(i));
+There is a better way. The library designers can supply a forEach method that
+applies a function to each element. Then you can simply call
+list.forEach(System.out::println);
+That’s fine if the collections library has been designed from the ground up. But
+the Java collections library has been designed many years ago, and there is a
+problem. If the Collection interface gets new methods, such as forEach , then
+every program that defines its own class implementing Collection will break until
+it, too, implements that method. That is simply unacceptable in Java.
+The Java designers decided to solve this problem once and for all by allowing
+interface methods with concrete implementations (called default methods). Those
+methods can be safely added to existing interfaces. In this section, we’ll look into
+default methods in detail.
+
+default method implementation in interfaces. This capability is added for backward compatibility so that old interfaces can be used to leverage the lambda expression capability of Java 8. For example, ‘List’ or ‘Collection’ interfaces do not have ‘forEach’ method declaration. Thus, adding such method will simply break the collection framework implementations. Java 8 introduces default method so that List/Collection interface can have a default implementation of forEach method, and the class implementing these interfaces need not implement the same.
+
+
+public class Default_method {
+   public static void main(String args[]){
+      Vehicle vehicle = new Car();
+      vehicle.print();
+   }
+}
+
+interface Vehicle {
+   default void print(){
+      System.out.println("I am a vehicle!");
+   }
+	
+   static void blowHorn(){
+      System.out.println("Blowing horn!!!");
+   }
+}
+
+interface FourWheeler {
+   default void print(){
+      System.out.println("I am a four wheeler!");
+   }
+}
+
+class Car implements Vehicle, FourWheeler {
+   public void print(){
+      Vehicle.super.print();
+      FourWheeler.super.print();
+      Vehicle.blowHorn();
+      System.out.println("I am a car!");
+   }
+}
+
+
+Method References
+Method references help to point to methods by their names. A method reference is described using :: (double colon) symbol. A method reference can be used to point the following types of methods −
+Static methods 
+Instance methods 
+Constructors using new operator (TreeSet::new) 
+import java.util.List;
+import java.util.ArrayList;
+
+public class Java8Tester {
+   public static void main(String args[]){
+      List names = new ArrayList();
+                
+      names.add("Mahesh");
+      names.add("Suresh");
+      names.add("Ramesh");
+      names.add("Naresh");
+      names.add("Kalpesh");
+                
+      names.forEach(System.out::println);
+   }
+}
+
