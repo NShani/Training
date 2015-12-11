@@ -1,0 +1,85 @@
+﻿What is JSON?
+
+JSON: JavaScript Object Notation.
+JSON is a syntax for storing and exchanging data.
+JSON is an easier-to-use alternative to XML.
+
+JSON stands for JavaScript Object Notation 
+JSON is a lightweight data-interchange format 
+JSON is language independent * 
+JSON is "self-describing" and easy to understand 
+
+
+JSON Example :-
+
+{"employees":[
+    {"firstName":"John", "lastName":"Doe"},
+    {"firstName":"Anna", "lastName":"Smith"},
+    {"firstName":"Peter", "lastName":"Jones"}
+]}
+
+
+The following XML example also defines an employees object with 3 employee records:
+XML Example :-
+
+<employees>
+    <employee>
+        <firstName>John</firstName> <lastName>Doe</lastName>
+    </employee>
+    <employee>
+        <firstName>Anna</firstName> <lastName>Smith</lastName>
+    </employee>
+    <employee>
+        <firstName>Peter</firstName> <lastName>Jones</lastName>
+    </employee>
+</employees>
+
+
+Uses of JSON
+
+It is used while writing JavaScript based applications that includes browser extensions and websites.
+JSON format is used for serializing and transmitting structured data over network connection.
+It is primarily used to transmit data between a server and web applications.
+Web services and APIs use JSON format to provide public data.
+It can be used with modern programming languages.
+
+
+Another simple Example in JSON
+The following example shows how to use JSON to store information related to books based on their topic and edition.
+
+{
+   "book": [
+        
+      {
+         "id":"01",
+         "language": "Java",
+         "edition": "third",
+         "author": "Herbert Schildt"
+      },
+        
+      {
+         "id":"07",
+         "language": "C++",
+         "edition": "second"
+         "author": "E.Balagurusamy"
+	      }
+	   ]
+}
+
+
+
+JSON - DataTypes
+JSON format supports the following data types −
+
+Type     		Description
+Number		double- precision floating-point format in JavaScript
+String		double-quoted Unicode with backslash escaping
+Boolean		true or false
+Array		an ordered sequence of values
+Value		it can be a string, a number, true or false, null etc
+Object		an unordered collection of key:value pairs
+Whitespace	can be used between any pair of tokens
+null		empty
+
+http://www.tutorialspoint.com/json/json_quick_guide.htm
+
