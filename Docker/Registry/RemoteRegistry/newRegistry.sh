@@ -13,14 +13,11 @@ read port
 echo 'Enter the port that you want to map the host port'
 read host
 
-echo 'Enter the storage path e.g. :- `pwd`/certs:/certs'
-read path
-
 echo 'Enter the name for the Registry'
 read name
 
 #run the docker registry with TLS enabled
-sudo docker run -d -p $host:$port --restart=always --name $name -v $path -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/domain.crt -e REGISTRY_HTTP_TLS_KEY=/certs/domain.key registry:2
+sudo docker run -d -p $host:$port --restart=always --name $name -v `pwd`/certs:/certs -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/domain.crt -e REGISTRY_HTTP_TLS_KEY=/certs/domain.key registry:2
 
 
 
