@@ -11,7 +11,7 @@ sudo scp $remoteHostPath $localPath
 echo "$(tput setaf 2)Enter the Domain name :$(tput sgr0)(e.g.:- test.wso2.com) "
 read domain
 
-sudo mv /home/domain.crt /home/$domain
+sudo mv $localPath/domain.crt $localPath/$domain
 
 #copy domain file
 sudo cp $localPath/$domain /usr/local/share/ca-certificates/$domain.crt

@@ -4,7 +4,7 @@ mkdir -p certs
 
 # get certificate 
 echo "$(tput setaf 1)Common Name for the certificate should be the Host name$(tput sgr0)";
-#openssl req -newkey rsa:4096 -nodes -sha256 -keyout certs/domain.key -x509 -days 365 -out certs/domain.crt
+openssl req -newkey rsa:4096 -nodes -sha256 -keyout certs/domain.key -x509 -days 365 -out certs/domain.crt
 echo 'Successfully created a certificate'
 
 echo 'Enter the port that you want to map the container port'
