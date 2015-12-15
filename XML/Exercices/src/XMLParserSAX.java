@@ -2,7 +2,6 @@
  * Created by nadeeshani on 11/4/15.
  */
 
-
 import java.io.File;
         import java.io.IOException;
         import java.util.List;
@@ -13,20 +12,21 @@ import java.io.File;
 
         import org.xml.sax.SAXException;
 
-
 public class XMLParserSAX {
-
     public static void main(String[] args) {
         SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
         try {
             SAXParser saxParser = saxParserFactory.newSAXParser();
             MyHandler handler = new MyHandler();
-            saxParser.parse(new File("employee.xml"), handler);
+            saxParser.parse(new File("src/Resources/employee.xml"), handler);
+            
             //Get Employees list
             List<Employee> empList = handler.getEmpList();
+            
             //print employee information
-            for(Employee emp : empList)
+            for(Employee emp : empList){
                 System.out.println(emp);
+            }
         } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
         }

@@ -16,7 +16,6 @@ import java.io.File;
         import org.w3c.dom.Element;
         import org.w3c.dom.Node;
 
-
 public class XMLWriterDOM {
 
     public static void main(String[] args) {
@@ -32,10 +31,10 @@ public class XMLWriterDOM {
             doc.appendChild(rootElement);
 
             //append first child element to root element
-            rootElement.appendChild(getEmployee(doc, "1", "Pankaj", "29", "Java Developer", "Male"));
+            rootElement.appendChild(getEmployee(doc, "1", "Shewan", "29", "Java Developer", "Male"));
 
             //append second child
-            rootElement.appendChild(getEmployee(doc, "2", "Lisa", "35", "Manager", "Female"));
+            rootElement.appendChild(getEmployee(doc, "2", "Heshani", "35", "Manager", "Female"));
 
             //for output to file, console
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -46,7 +45,7 @@ public class XMLWriterDOM {
 
             //write to console or file
             StreamResult console = new StreamResult(System.out);
-            StreamResult file = new StreamResult(new File("emps.xml"));
+            StreamResult file = new StreamResult(new File("src/Resources/emps.xml"));
 
             //write data
             transformer.transform(source, console);
@@ -58,9 +57,7 @@ public class XMLWriterDOM {
         }
     }
 
-
-    private static Node getEmployee(Document doc, String id, String name, String age, String role,
-                                    String gender) {
+    private static Node getEmployee(Document doc, String id, String name, String age, String role,String gender) {
         Element employee = doc.createElement("Employee");
 
         //set id attribute
@@ -81,12 +78,10 @@ public class XMLWriterDOM {
         return employee;
     }
 
-
     //utility method to create text node
     private static Node getEmployeeElements(Document doc, Element element, String name, String value) {
         Element node = doc.createElement(name);
         node.appendChild(doc.createTextNode(value));
         return node;
     }
-
 }

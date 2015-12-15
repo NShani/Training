@@ -17,23 +17,18 @@ public class MyHandler extends DefaultHandler {
     private List<Employee> empList = null;
     private Employee emp = null;
 
+    boolean age = false;
+    boolean name = false;
+    boolean gender = false;
+    boolean role = false;
 
     //getter method for employee list
     public List<Employee> getEmpList() {
         return empList;
     }
 
-
-    boolean bAge = false;
-    boolean bName = false;
-    boolean bGender = false;
-    boolean bRole = false;
-
-
     @Override
-    public void startElement(String uri, String localName, String qName, Attributes attributes)
-            throws SAXException {
-
+    public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         if (qName.equalsIgnoreCase("Employee")) {
             //create a new Employee and put it in Map
             String id = attributes.getValue("id");
@@ -41,20 +36,20 @@ public class MyHandler extends DefaultHandler {
             emp = new Employee();
             //emp.setId(Integer.parseInt(id));
             //initialize list
-            if (empList == null)
+            if (empList == null){
                 empList = new ArrayList<>();
+            }
         } else if (qName.equalsIgnoreCase("name")) {
             //set boolean values for fields, will be used in setting Employee variables
-            bName = true;
+            name = true;
         } else if (qName.equalsIgnoreCase("age")) {
-            bAge = true;
+            age = true;
         } else if (qName.equalsIgnoreCase("gender")) {
-            bGender = true;
+            gender = true;
         } else if (qName.equalsIgnoreCase("role")) {
-            bRole = true;
+            role = true;
         }
     }
-
 
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
@@ -64,23 +59,21 @@ public class MyHandler extends DefaultHandler {
         }
     }
 
-
     @Override
     public void characters(char ch[], int start, int length) throws SAXException {
-
-        if (bAge) {
+        if (age) {
             //age element, set Employee age
             emp.setAge(Integer.parseInt(new String(ch, start, length)));
-            bAge = false;
-        } else if (bName) {
+            age = false;
+        } else if (name) {
             emp.setName(new String(ch, start, length));
-            bName = false;
-        } else if (bRole) {
+            name = false;
+        } else if (role) {
             emp.setRole(new String(ch, start, length));
-            bRole = false;
-        } else if (bGender) {
+            role = false;
+        } else if (gender) {
             emp.setGender(new String(ch, start, length));
-            bGender = false;
+            gender = false;
         }
     }
 }
