@@ -17,16 +17,16 @@ import java.io.File;
         import org.w3c.dom.Node;
 
 public class XMLWriterDOM {
-
     public static void main(String[] args) {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder;
         try {
             dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.newDocument();
+            
             //add elements to Document
-            Element rootElement =
-                    doc.createElementNS("http://www.journaldev.com/employee", "Employees");
+            Element rootElement = doc.createElementNS("http://www.journaldev.com/employee", "Employees");
+            
             //append root element to document
             doc.appendChild(rootElement);
 
@@ -39,6 +39,7 @@ public class XMLWriterDOM {
             //for output to file, console
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
+            
             //for pretty print
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             DOMSource source = new DOMSource(doc);
@@ -50,6 +51,7 @@ public class XMLWriterDOM {
             //write data
             transformer.transform(source, console);
             transformer.transform(source, file);
+            
             System.out.println("DONE");
 
         } catch (Exception e) {
@@ -81,7 +83,9 @@ public class XMLWriterDOM {
     //utility method to create text node
     private static Node getEmployeeElements(Document doc, Element element, String name, String value) {
         Element node = doc.createElement(name);
+        
         node.appendChild(doc.createTextNode(value));
+        
         return node;
     }
 }

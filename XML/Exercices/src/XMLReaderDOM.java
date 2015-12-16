@@ -28,11 +28,14 @@ public class XMLReaderDOM {
         try {
             dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(xmlFile);
+            
             doc.getDocumentElement().normalize();
-            System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+            
             NodeList nodeList = doc.getElementsByTagName("Employee");
             List <Employee> empList = new ArrayList<Employee>();
-          
+            
+            System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+               
             for (int i = 0; i < nodeList.getLength(); i++) {
                 empList.add(getEmployee(nodeList.item(i)));
                 System.out.println(empList.get(i).getAge());
@@ -50,6 +53,7 @@ public class XMLReaderDOM {
     private static Employee getEmployee(Node node) {
         //XMLReaderDOM domReader = new XMLReaderDOM();
         Employee emp = new Employee();
+        
         if (node.getNodeType() == Node.ELEMENT_NODE) {
             Element element = (Element) node;
             emp.setName(getTagValue("name", element));
@@ -57,12 +61,14 @@ public class XMLReaderDOM {
             emp.setGender(getTagValue("gender", element));
            // emp.setRole(getTagValue("role", element));
         }
+       
         return emp;
     }
 
     private static String getTagValue(String tag, Element element) {
         NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes();
         Node node = (Node) nodeList.item(0);
+        
         return node.getNodeValue();
     }
 }

@@ -1,0 +1,129 @@
+﻿What is XML?
+Introduction
+XML, or Extensible Markup Language, is a markup language that you can use to create your own tags. It was created by the World Wide Web Consortium (W3C) to overcome the limitations of HTML, the Hypertext Markup Language that is the basis for all Web pages. Like HTML, XML is based on SGML -- Standard Generalized Markup Language. Although SGML has been used in the publishing industry for decades, its perceived complexity intimidated many people that otherwise might have used it (SGML also stands for "Sounds great, maybe later"). XML was designed with the Web in mind. 
+Defining document content
+Overview: Defining document content
+So far in this tutorial you've learned about the basic rules of XML documents; that's all well and good, but you need to define the elements you're going to use to represent data. You'll learn about two ways of doing that in this section.
+One method is to use a Document Type Definition, or DTD. A DTD defines the elements that can appear in an XML document, the order in which they can appear, how they can be nested inside each other, and other basic details of XML document structure. DTDs are part of the original XML specification and are very similar to SGML DTDs.
+The other method is to use an XML Schema. A schema can define all of the document structures that you can put in a DTD, and it can also define data types and more complicated rules than a DTD can. The W3C developed the XML Schema specification a couple of years after the original XML spec
+XML schemas
+With XML schemas, you have more power to define what valid XML documents look like. They have several advantages over DTDs:
+XML schemas use XML syntax. In other words, an XML schema is an XML document. That means you can process a schema just like any other document. For example, you can write an XSLT style sheet that converts an XML schema into a Web form complete with automatically generated JavaScript code that validates the data as you enter it. 
+XML schemas support datatypes. While DTDs do support datatypes, it's clear those datatypes were developed from a publishing perspective. XML schemas support all of the original datatypes from DTDs (things like IDs and ID references). They also support integers, floating point numbers, dates, times, strings, URLs, and other datatypes useful for data processing and validation.
+XML schemas are extensible. In addition to the datatypes defined in the XML schema specification, you can also create your own, and you can derive new datatypes based on other datatypes. 
+XML schemas have more expressive power. For example, with XML schemas you can define that the value of any <state> attribute can't be longer than 2 characters, or that the value of any <postal-code> element must match the regular expression [0-9]{5}(-[0-9]{4})?. You can't do either of those things with DTDs.
+A sample XML schema
+Here's an XML schema that matches the original name and address DTD. It adds two constraints: The value of the <state> element must be exactly two characters long and the value of the <postal-code> element must match the regular expression [0-9]{5}(-[0-9]{4})?. Although the schema is much longer than the DTD, it expresses more clearly what a valid document looks like. Here's the schema:
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:element name="address">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="name"/>
+        <xsd:element ref="street"/>
+        <xsd:element ref="city"/>
+        <xsd:element ref="state"/>
+        <xsd:element ref="postal-code"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="name">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="title" minOccurs="0"/>
+        <xsd:element ref="first-Name"/>
+        <xsd:element ref="last-Name"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="title"      type="xsd:string"/>
+  <xsd:element name="first-Name" type="xsd:string"/>
+  <xsd:element name="last-Name"  type="xsd:string"/>
+  <xsd:element name="street"     type="xsd:string"/>
+  <xsd:element name="city"       type="xsd:string"/>
+
+  <xsd:element name="state">
+    <xsd:simpleType>
+      <xsd:restriction base="xsd:string">
+        <xsd:length value="2"/>
+      </xsd:restriction>
+    </xsd:simpleType>
+  </xsd:element>
+
+  <xsd:element name="postal-code">
+    <xsd:simpleType>
+      <xsd:restriction base="xsd:string">
+        <xsd:pattern value="[0-9]{5}(-[0-9]{4})?"/>
+      </xsd:restriction>
+    </xsd:simpleType>
+  </xsd:element>
+</xsd:schema>
+
+
+A simple XML document, with a schema. File:simple.xml
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<vehicles
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://lucas.ucs.ed.ac.uk/xml-schema/xmlns/simple.xsd"
+   >
+        <nickname>Bog Hopper</nickname>
+        <nickname>Wee Beastie</nickname>
+        <nickname>Count Zero</nickname>
+</vehicles>
+
+The schema. File: simple.xsd
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<xsd:schema
+   xmlns:xsd = "http://www.w3.org/2001/XMLSchema">
+    <xsd:element name = "vehicles">
+     <xsd:complexType>
+      <xsd:sequence>
+       <xsd:element name = "nickname" 
+                    type = "xsd:string"
+                    maxOccurs = "unbounded"/>
+      </xsd:sequence>
+     </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
+
+
+
+
+XML programming interfaces
+This section takes a look at a variety of programming interfaces for XML. These interfaces give developers a consistent interface for working with XML documents. There are many APIs available; this section looks at four of the most popular and generally useful ones: the Document Object Model (DOM), the Simple API for XML (SAX), JDOM, and the Java API for XML Parsing (JAXP).
+The Document Object Model
+The Document Object Model, commonly called the DOM, defines a set of interfaces to the parsed version of an XML document. The parser reads in the entire document and builds an in-memory tree, so your code can then use the DOM interfaces to manipulate the tree. You can move through the tree to see what the original document contained, you can delete sections of the tree, you can rearrange the tree, add new branches, and so on. 
+The Simple API for XML
+To get around the DOM issues, the XML-DEV participants (led by David Megginson) created the SAX interface. SAX has several characteristics that address the concerns about the DOM:
+A SAX parser sends events to your code. The parser tells you when it finds the start of an element, the end of an element, text, the start or end of the document, and so on. You decide which events are important to you, and you decide what kind of data structures you want to create to hold the data from those events. If you don't explicitly save the data from an event, it's discarded.
+A SAX parser doesn't create any objects at all, it simply delivers events to your application. If you want to create objects based on those events, that's up to you.
+A SAX parser starts delivering events to you as soon as the parse begins. Your code will get an event when the parser finds the start of the document, when it finds the start of an element, when it finds text, and so on. Your application starts generating results right away; you don't have to wait until the entire document has been parsed. Even better, if you're only looking for certain things in the document, your code can throw an exception once it's found what it's looking for. The exception stops the SAX parser, and your code can do whatever it needs to do with the data it has found.
+Having said all of these things, both SAX and DOM have their place. The remainder of this section discusses why you might want to use one interface or the other.
+DOM
+Frustrated by the difficulty in doing certain tasks with the DOM and SAX models, Jason Hunter and Brett McLaughlin created the JDOM package. JDOM is a Java technology-based, open source project that attempts to follow the 80/20 rule: Deliver what 80% of users need with 20% of the functions in DOM and SAX. JDOM works with SAX and DOM parsers, so it's implemented as a relatively small set of Java classes. 
+The main feature of JDOM is that it greatly reduces the amount of code you have to write. Although this introductory tutorial doesn't discuss programming topics in depth, JDOM applications are typically one-third as long as DOM applications, and about half as long as SAX applications. (DOM purists, of course, suggest that learning and using the DOM is good discipline that will pay off in the long run.) JDOM doesn't do everything, but for most of the parsing you want to do, it's probably just the thing. 
+
+The Java API for XML Parsing
+Although DOM, SAX, and JDOM provide standard interfaces for most common tasks, there are still several things they don't address. For example, the process of creating a DOMParser object in a Java program differs from one DOM parser to the next. To fix this problem, Sun has released JAXP, the Java API for XML Parsing. This API provides common interfaces for processing XML documents using DOM, SAX, and XSLT. 
+JAXP provides interfaces such as the DocumentBuilderFactory and the DocumentBuilder that provide a standard interface to different parsers. There are also methods that allow you to control whether the underlying parser is namespace-aware and whether it uses a DTD or schema to validate the XML document.
+Read XML DOM: 
+http://www.developerfusion.com/code/2064/a-simple-way-to-read-an-xml-file-in-java/
+
+
+http://www.journaldev.com/898/how-to-read-an-xml-file-in-java-dom-parser
+
+Write XML DOM :
+
+http://www.journaldev.com/1112/how-to-write-xml-file-in-java-dom-parser
+
+Read XML SAX :
+
+http://www.journaldev.com/1198/java-sax-parser-example-tutorial-to-parse-xml-to-list-of-objects
+
+Normalizing :
+http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
+

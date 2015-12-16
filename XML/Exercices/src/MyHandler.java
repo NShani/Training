@@ -3,13 +3,10 @@
  */
 
 import java.util.ArrayList;
-        import java.util.List;
-
-        import org.xml.sax.Attributes;
-        import org.xml.sax.SAXException;
-        import org.xml.sax.helpers.DefaultHandler;
-
-
+import java.util.List;
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
 
 public class MyHandler extends DefaultHandler {
 
@@ -60,7 +57,7 @@ public class MyHandler extends DefaultHandler {
     }
 
     @Override
-    public void characters(char ch[], int start, int length) throws SAXException {
+    public void characters(char[] ch, int start, int length) throws SAXException {
         if (age) {
             //age element, set Employee age
             emp.setAge(Integer.parseInt(new String(ch, start, length)));
