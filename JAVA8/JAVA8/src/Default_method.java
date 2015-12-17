@@ -1,7 +1,7 @@
 public class Default_method {
    public static void main(String args[]){
-      Vehicle vehicle = new Car();
-      vehicle.print();
+      Car car = new Car();
+      car.print();
    }
 }
 
@@ -22,10 +22,12 @@ interface FourWheeler {
 }
 
 class Car implements Vehicle, FourWheeler {
+   @Override
    public void print(){
-      Vehicle.super.print();
-      FourWheeler.super.print();
-      Vehicle.blowHorn();
-      System.out.println("I am a car!");
+    
+      //Vehicle.super.print();
+      //FourWheeler.super.print();
+      //Vehicle.blowHorn();
+      //System.out.println("I am a car!");
    }
 }

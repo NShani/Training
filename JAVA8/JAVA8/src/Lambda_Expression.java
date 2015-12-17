@@ -1,6 +1,7 @@
+
 public class Lambda_Expression {
    public static void main(String args[]){
-      Java8Tester tester = new Java8Tester();
+       Lambda_Expression tester = new Lambda_Expression();
 		
       //with type declaration
       MathOperation addition = (int a, int b) -> a + b;
@@ -14,11 +15,13 @@ public class Lambda_Expression {
       //without return statement and without curly braces
       MathOperation division = (int a, int b) -> a / b;
 		
+      
       System.out.println("10 + 5 = " + tester.operate(10, 5, addition));
       System.out.println("10 - 5 = " + tester.operate(10, 5, subtraction));
       System.out.println("10 x 5 = " + tester.operate(10, 5, multiplication));
       System.out.println("10 / 5 = " + tester.operate(10, 5, division));
 		
+      System.out.println("++++"+division.operation(10, 5));
       //with parenthesis
       GreetingService greetService1 = message ->
       System.out.println("Hello " + message);
@@ -29,6 +32,7 @@ public class Lambda_Expression {
 		
       greetService1.sayMessage("Nadeeshani");
       greetService2.sayMessage("Kalani");
+            
    }
 	
    interface MathOperation {
