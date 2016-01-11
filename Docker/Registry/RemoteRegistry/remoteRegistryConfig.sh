@@ -1,27 +1,20 @@
 #!/bin/bash
 
-echo "$(tput setaf 2)Enter the path for the domain file in Remote Host : your_username@remotehost.edu:foobar.txt $(tput sgr0)(e.g.:- appfactory@192.168.16.2:nadeeshani/certs/domain.crt)";
-read remoteHostPath
-
-echo "$(tput setaf 2)Enter the path to copy the domain file in Local Host : /some/local/directory$(tput sgr0) (e.g.:- /home/certs )"
-read localPath
-
-sudo scp $remoteHostPath $localPath
-
-echo "$(tput setaf 2)Enter the Domain name :$(tput sgr0)(e.g.:- test.wso2.com) "
+echo "$(tput setaf 2)Enter the Domain name :$(tput sgr0)(e.g.:- registry.docker.appfactory.private.wso2.com:5000) "
 read domain
 
-sudo mv $localPath/domain.crt $localPath/$domain
+echo "$(tput setaf 2)Enter the Host Port of the Remote Registry :$(tput sgr0)(e.g. :- 5000) "
+read hostPort
 
-#copy domain file
-sudo cp $localPath/$domain /usr/local/share/ca-certificates/$domain.crt
-sudo cp $localPath/$domain /etc/ssl/certs/$domain.crt
+#sudo scp $remoteHostPath $localPath
+sudo openssl s_client -showcerts -connect $domain:$hostPort </dev/null 2>/dev/null|openssl x509 -outform PEM >$domain.crt
+
+
+sudo cp $domain.crt /usr/local/share/ca-certificates/$domain.crt
+sudo cp $domain.crt /etc/ssl/certs/$domain.crt
 
 # update certificcates
 sudo update-ca-certificates
-
-echo "$(tput setaf 2)Enter the Host Port :$(tput sgr0)(e.g. :- 5000) "
-read hostPort
 
 #update docker file
 sudo sed -i '$ a DOCKER_OPTS="--insecure-registry '$domain:$hostPort'"' /etc/default/docker
