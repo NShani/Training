@@ -6,7 +6,6 @@ read domain
 echo "$(tput setaf 2)Enter the Host Port of the Remote Registry :$(tput sgr0)(e.g. :- 5000) "
 read hostPort
 
-#sudo scp $remoteHostPath $localPath
 sudo openssl s_client -showcerts -connect $domain:$hostPort </dev/null 2>/dev/null|openssl x509 -outform PEM >$domain.crt
 
 
