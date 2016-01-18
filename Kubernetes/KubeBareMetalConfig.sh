@@ -63,11 +63,17 @@ sudo sed -i '21s/.*/export nodes=${nodes:-"'$user'@'$Ip'"}/' cluster/ubuntu/conf
 sudo sed -i '24s/.*/role=${role:-"ai"}/' cluster/ubuntu/config-default.sh
 sudo sed -i '30s/.*/export NUM_NODES=${NUM_NODES:-1}/' cluster/ubuntu/config-default.sh
 
+sudo sed -i 's:KUBE_APISERVER_OPTS="\:KUBE_APISERVER_OPTS="\
+ --runtime-config=extensions/v1beta1/deployments=true,extensions/v1beta1/daemonsets=true\:' cluster/ubuntu/util.sh
+
 sudo sed -i '43s:.*:_nodes=$("${KUBE_ROOT}/cluster/kubectl.sh" get nodes) || true:g' cluster/validate-cluster.sh
 sudo sed -i '44s/.*/found=$(($(echo "${_nodes}" | wc -l) - 1)) || true/g' cluster/validate-cluster.sh
 sudo sed -i '45s/.*/ready=$(echo "${_nodes}" | grep -c "Ready") || true/g' cluster/validate-cluster.sh
-
+sudo sed -i '202s:--logtostderr=true\\:--runtime-config=extensions/v1beta1/deployments=true,extensions/v1beta1/daemonsets=true\\\
+ --logtostderr=true\\:g' kubernetes/cluster/ubuntu/util.sh
 x=$(pwd)
+export PATH=$x/cluster/ubuntu/binaries:$PATH
+
 export KUBE_CONFIG_FILE=$x/cluster/ubuntu/config-default.sh
 cd cluster
 
@@ -75,6 +81,8 @@ KUBERNETES_PROVIDER=ubuntu ./kube-up.sh
 
 echo "$(tput setaf 2)Deploying the addons (UI and DNS)$(tput sgr0) "
 cd ubuntu
+
+export PATH=$x/cluster/ubuntu/binaries:$PATH
 export KUBE_CONFIG_FILE=$x/cluster/ubuntu/config-default.sh
 KUBERNETES_PROVIDER=ubuntu ./deployAddons.sh
 
