@@ -1,0 +1,17 @@
+{
+  "name": "org.wso2.sample.http.stats",
+  "version": "1.0.0",
+  "nickName": "Http_Stat_Stream",
+  "description": "Sample of Http Statistics",
+  "payloadData": [
+    {
+      "name": "server_address",
+      "type": "STRING"
+    },
+    {
+      "name": "webAppName",
+      "type": "STRING"
+    }
+
+  ]
+}

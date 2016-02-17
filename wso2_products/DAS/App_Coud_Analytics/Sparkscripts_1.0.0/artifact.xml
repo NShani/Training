@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<artifact name="Sparkscripts" version="1.0.0" type="analytics/spark" serverRole="DataAnalyticsServer">
+    <file>http_stats_analytics.xml</file>
+    <!--<file>http_event_script.xml</file>-->
+</artifact>

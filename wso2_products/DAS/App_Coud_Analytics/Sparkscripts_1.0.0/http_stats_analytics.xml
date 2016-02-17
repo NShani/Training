@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Analytics>
+    <Name>http_stats_analytics</Name>
+    <Script>
+
+        CREATE TEMPORARY TABLE HttpStatsTable
+        USING CarbonAnalytics
+        OPTIONS (tableName "ORG_WSO2_SAMPLE_HTTP_STATS");
+
+        <!--CREATE TEMPORARY TABLE WEB_APP_REQUESTS USING CarbonAnalytics OPTIONS (tableName "WEB_APP_REQUESTS",-->
+        <!--schema "application_type string,-->
+        <!--server_address string,-->
+        <!--avg_request_count int,-->
+        <!--avg_response_time int,-->
+        <!--http_success_count int,-->
+        <!--http_error_count int,-->
+        <!--session_count int,-->
+        <!--time string",-->
+        <!--primaryKeys "time"-->
+        <!--);-->
+
+        <!--insert into table REQUESTS_SUMMARY_PER_MINUTE_FINAL select webappType as application_type,-->
+        <!--meta_server_address as server_address,-->
+        <!--count(requestUri) as avg_request_count,-->
+        <!--avg(responseTime) as avg_response_time,-->
+        <!--sum(if(responseHttpStatusCode&lt;400, 1, 0)) as http_success_count,-->
+        <!--sum(if(responseHttpStatusCode&gt;=400, 1, 0)) as http_error_count,-->
+        <!--0 as session_count,-->
+        <!--substring(cast(timestamp/1000 as timestamp),0,16) as time from HttpStatsTable group by webappType, meta_server_address, substring(cast(timestamp/1000 as timestamp),0,16);-->
+
+        <!--INSERT OVERWRITE TABLE RequestsPerMinute SELECT application_type as webappType, server_address as serverName, avg_request_count as averageRequestCount, avg_response_time as averageResponseTime, http_success_count as httpSuccessCount, http_error_count as httpErrorCount, session_count as sessionCount, time as TIME FROM MSS_REQUESTS_SUMMARY_PER_MINUTE_FINAL;-->
+
+
+
+    </Script>
+    <CronExpression>0 * * * * ?</CronExpression>
+</Analytics>
+
